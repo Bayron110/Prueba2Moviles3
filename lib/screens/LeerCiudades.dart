@@ -31,8 +31,8 @@ Widget Listar(context) {
           itemBuilder: (context, index) {
             final item = data[index];
             return ListTile(
-              title: Text("${item['nombre']} - ${item['provincia']}"),
-              subtitle: Text("Población: ${item['poblacion']}"),
+              title: Text("${item['nombre']}"),
+              subtitle: Text("Provincia: ${item['provincia']}"),
               onTap: () {
                 showDialog(
                   context: context,

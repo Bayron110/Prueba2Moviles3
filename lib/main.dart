@@ -1,6 +1,5 @@
 import 'package:app_autonomo/screens/GastronomiaScreen.dart';
 import 'package:app_autonomo/screens/LeerCiudades.dart';
-import 'package:app_autonomo/screens/LeerScreen.dart';
 import 'package:app_autonomo/screens/LoginScreen.dart';
 import 'package:app_autonomo/screens/RegistroScreen.dart';
 import 'package:app_autonomo/screens/Welcome.dart';
@@ -65,7 +64,7 @@ class _LeerBottomTabState extends State<LeerBottomTab> {
   int _index = 0;
 
   final List<Widget> _screens = [
-    LeerScreen(),
+    GastronomiaScreen(),
     Ciudades(),
   ];
 
@@ -83,7 +82,7 @@ class _LeerBottomTabState extends State<LeerBottomTab> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.menu_book),
-            label: 'Leer',
+            label: 'Ingresar un plato',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.location_city),

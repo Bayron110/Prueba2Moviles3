@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class GastronomiaScreen extends StatelessWidget {
   const GastronomiaScreen({super.key});
@@ -8,75 +7,53 @@ class GastronomiaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Guardar gasto")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: formulario(context),
-      ),
+      appBar: AppBar(title: Text("Guardados")),
+      body: formularioG(context),
     );
   }
 }
 
-Widget formulario(BuildContext context) {
-  final TextEditingController titulo = TextEditingController();
-  final TextEditingController descripcion = TextEditingController();
-  final TextEditingController precio = TextEditingController();
+Widget formularioG(context) {
+  TextEditingController id = TextEditingController();
+  TextEditingController ciudad = TextEditingController();
+  TextEditingController nombre = TextEditingController();
 
   return Column(
     children: [
       TextField(
-        controller: titulo,
-        decoration: const InputDecoration(labelText: "Nombre"),
+        controller: id,
+        decoration: InputDecoration(label: Text("Ingresar id del plato")),
       ),
+
       TextField(
-        controller: descripcion,
-        decoration: const InputDecoration(labelText: "Descripción"),
+        controller: nombre,
+        decoration: InputDecoration(label: Text("Ingresar Plato Tipico")),
       ),
+
       TextField(
-        controller: precio,
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(labelText: "Precio del plato"),
+        controller: ciudad,
+        decoration: InputDecoration(label: Text("Ingresar Ciudad")),
       ),
-      const SizedBox(height: 20),
-      FilledButton(
-        onPressed: () {
-          guardarGasto(
-            context,
-            titulo.text,
-            descripcion.text,
-            precio.text,
-          );
-        },
-        child: const Text("Guardar"),
-      ),
+      FilledButton(onPressed: ()=>guardarPelicula(id, nombre, ciudad,context), child: Text("Guardar"))
     ],
   );
 }
 
-Future<void> guardarGasto(
-  BuildContext context,
-  String titulo,
-  String descripcion,
-  String precio,
-) async {
-  final user = FirebaseAuth.instance.currentUser;
-  if (user == null) return;
-
-  DatabaseReference ref = FirebaseDatabase.instance
-      .ref("Platos/${user.uid}")
-      .push();
+Future<void> guardarPelicula(id, nombre, ciudad, context) async {
+  DatabaseReference ref = FirebaseDatabase.instance.ref("gastronimia/${id.text}");
 
   await ref.set({
-    "titulo": titulo,
-    "descripcion": descripcion,
-    "precio": precio,
+    "titulo": nombre.text,
+    "ciudad": ciudad.text,
   });
 
-  showDialog(
+  showAdaptiveDialog(
     context: context,
-    builder: (_) => AlertDialog(
-      title: const Text("Éxito"),
-      content: const Text("El gasto se guardó correctamente."),
-    ),
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Éxito"),
+        content: const Text("El plato se guardo correctamente."),
+      );
+    },
   );
 }
