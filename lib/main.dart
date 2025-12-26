@@ -29,7 +29,7 @@ class MiAplicacion extends StatelessWidget {
         '/welcome': (context) => Welcome(),
         'leerCiudades': (context) => Ciudades(),
       },
-      home: const Cuerpo(),
+      home: Cuerpo(),
     );
   }
 }
